@@ -1,7 +1,7 @@
-# Soft Rigidity Scene Flow Regularization
+# Let It Flow
 
-<!-- # Results on StereoKITTI dataset 
-![alt text](docs/performance.png) -->
+ 
+![alt text](docs/comparison_v3.png)
 
 
 
