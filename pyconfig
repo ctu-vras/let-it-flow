@@ -1,0 +1,13 @@
+#!/bin/bash -l
+
+ml PyTorch3D/0.7.5-foss-2023a-CUDA-12.1.1
+ml kornia/0.7.2-foss-2023a-CUDA-12.1.1
+ml OpenCV/4.8.1-foss-2023a-CUDA-12.1.1-contrib
+ml JupyterLab/4.0.5-GCCcore-12.3.0
+
+python "$@"
+# for full
+# av2-api download, cargo update, pip install -e .
+# pip install detectron -e
+# pip install bucket-scene-flow-eval
+# segment anything pip install -e
