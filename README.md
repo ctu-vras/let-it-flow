@@ -5,11 +5,11 @@
 </p>
   
   <p align="center">
-    <a href="https://github.com/youquanl">Patrik Vacek</a><sup>1</sup>&nbsp;&nbsp;&nbsp;
-    <a href="https://ldkong.com">David Hurych</a><sup>2</sup>&nbsp;&nbsp;&nbsp;
-    <a href="http://cen-jun.com">Karel Zimmermann</a><sup>1</sup>&nbsp;&nbsp;&nbsp;
+    <a href="https://github.com/vacany">Patrik Vacek</a><sup>1</sup>&nbsp;&nbsp;&nbsp;
+    <a href="https://scholar.google.com/citations?user=XY1PVwYAAAAJ">David Hurych</a><sup>2</sup>&nbsp;&nbsp;&nbsp;
+    <a href="https://sites.google.com/view/karelzimermann/">Karel Zimmermann</a><sup>1</sup>&nbsp;&nbsp;&nbsp;
     <!-- <a href="https://scholar.google.com/citations?user=Uq2DuzkAAAAJ">Runnan Chen</a><sup>4</sup>&nbsp;&nbsp;&nbsp; -->
-    <a href="http://zhangwenwei.cn">Tomas Svoboda</a><sup>1</sup><br>
+    <a href="https://cmp.felk.cvut.cz/~svoboda/">Tomas Svoboda</a><sup>1</sup><br>
     <!-- <a href="https://scholar.google.com/citations?user=lSDISOcAAAAJ">Liang Pan</a><sup>5</sup>&nbsp;&nbsp;&nbsp; -->
     <!-- <a href="http://chenkai.site">Kai Chen</a><sup>1</sup>&nbsp;&nbsp;&nbsp; -->
     <!-- <a href="https://liuziwei7.github.io">Ziwei Liu</a><sup>5</sup> -->
