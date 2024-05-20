@@ -1,5 +1,4 @@
-folder_path = 'datasets/argoverse2/'
-store_path = 'results/argoverse2/'
+
 device = 'cpu'
 nbr_of_devices = 1
 
@@ -24,5 +23,9 @@ cfg = {'frame' : 2,
     # 'model' : 'chodosh',
     # 'model' : 'NP',
     
+
+    # Folders:
+    'folder_path' : 'datasets/argoverse2/',
+    'store_path' : 'results/argoverse2/',
     }
 

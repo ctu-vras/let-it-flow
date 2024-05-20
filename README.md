@@ -41,10 +41,12 @@
 
 ### :sparkles: Highlight
 - :rocket: **Scalability:** `Let It Flow` does not require training or supervision as an optimization-based method and works on out-of-distribution data. 
-- :balance_scale: **Consistency:** `Let It Flow` performs consistently accross different benchmark datasets. For 
-- :rainbow: **Generalizability:** `Let It Flow` does not have to adjust the parameter config for accurate results on the tested datasets.
+- :balance_scale: **Consistency:** `Let It Flow` performs consistently accross different benchmark datasets.
+- :rainbow: **Generalizability:** `Let It Flow` does not have to adjust the parameter config for accurate results on the tested datasets. Improvements are observable even on new dynamic/object class error metrics.
 
-
+<p align="center">
+  <img src="docs/contribution_v10.png" align="center" width="95%">
+</p>
 
 # Installation
 

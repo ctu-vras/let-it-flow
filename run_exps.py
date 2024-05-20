@@ -17,23 +17,18 @@ from models.chodosh import infer_chodosh, fit_NeuralPrior, fit_MB_NeuralPrior, l
 from argoverse2 import sample_argoverse2
 
 
-from params import cfg, folder_path, device, nbr_of_devices
-# folder_path = '/mnt/datagrid/public_datasets/let-id-flow/data/argoverse2/sensor/processed_val/'
-
-
+from params import cfg
 
 # for RCI, use cuda:0
 use_gpu = 0
-device = torch.device(f'{device}')
-# device = torch.device(f'cuda:{use_gpu}')
-
-available_gpus = nbr_of_devices
+device = torch.device(f'{cfg['device']}')
+available_gpus = cfg['nbr_of_devices']
 
 Argoverse2_seqs = 150
 seq_arrays = np.array_split(range(Argoverse2_seqs), available_gpus)
 
 
-model = 'let_it_flow'
+model = cfg['let_it_flow']
 # model = 'MBNSFP'
 # model = 'chodosh'
 # model = 'NP'
@@ -51,12 +46,16 @@ eps = cfg['eps']
 min_samples = cfg['min_samples']
 lr = cfg['lr']
 
+folder_path = cfg['folder_path']
+store_path = cfg['store_path']
+os.makedirs(store_path, exist_ok=True)
+
 for seq_id in seq_arrays[use_gpu]:
 
     global_list, poses, gt_flow, compensated_gt_flow_list, dynamic_list, category_indices_list = sample_argoverse2(seq_id)
 
-    store_path = store_path
-    os.makedirs(store_path, exist_ok=True)
+    
+    
 
     # init clustering
     pcs = np.concatenate(global_list[:TEMPORAL_RANGE], axis=0)
@@ -65,7 +64,7 @@ for seq_id in seq_arrays[use_gpu]:
     p2 = pcs[pcs[:,3] == frame + 1][None, :,:3]
 
 
-    if model.startswith('let_it_flow'):
+    if model == 'let_it_flow':
 
         p1, p2, c1, c2, f1 = let_it_flow.initial_clustering(global_list, frame, TEMPORAL_RANGE, device, eps=eps, min_samples=min_samples, z_scale=0.5)
 
@@ -111,5 +110,6 @@ for seq_id in seq_arrays[use_gpu]:
                 'c1' : c1.detach().cpu().numpy(), 'f1' : f1.detach().cpu().numpy(),
                 'gt_flow' : gt_flow[frame], 'compensated_gt_flow' : compensated_gt_flow_list[frame], 'dynamic' : dynamic_list[frame],
                     'category_indices' : category_indices_list[frame], "model" : model}
+    
     np.savez(store_path + f'/{frame:06d}.npz', **store_dict)
     
