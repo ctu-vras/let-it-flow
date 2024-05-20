@@ -1,16 +1,9 @@
-
-
+<h3 align="center"><strong>Let It Flow: Simultaneous Optimization of 3D Flow and Object Clustering</strong></h3>
  
 <p align="center">
   <img src="docs/comparison_v3.png" align="center" width="95%">
 </p>
-
-
-<p align="center">
-  <img src="docs/figs/logo.png" align="center" width="44%">
   
-  <h3 align="center"><strong>Let It Flow: Simultaneous Optimization of 3D Flow and Object Clustering</strong></h3>
-
   <p align="center">
     <a href="https://github.com/youquanl">Patrik Vacek</a><sup>1</sup>&nbsp;&nbsp;&nbsp;
     <a href="https://ldkong.com">David Hurych</a><sup>2</sup>&nbsp;&nbsp;&nbsp;
@@ -47,9 +40,9 @@
 
 
 ### :sparkles: Highlight
-- :rocket: **Scalability:** 
-- :balance_scale: **Consistency:**
-- :rainbow: **Generalizability:** 
+- :rocket: **Scalability:** `Let It Flow` does not require training or supervision as an optimization-based method and works on out-of-distribution data. 
+- :balance_scale: **Consistency:** `Let It Flow` performs consistently accross different benchmark datasets. For 
+- :rainbow: **Generalizability:** `Let It Flow` does not have to adjust the parameter config for accurate results on the tested datasets.
 
 
 
