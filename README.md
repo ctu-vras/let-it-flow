@@ -79,9 +79,11 @@ tar -xvf argoverse2.tgz datasets/argoverse2/
  Set up the config.yaml to include path to the `argoverse2 folder` and path to store the `results`.
 
 
-| | | | Dynamic Foreground | | | Static Foreground | | | Static Background | | 
+<!-- https://fletcher.github.io/MultiMarkdown-4/tables -->
+
+|||| Dynamic Foreground ||| Static Foreground ||| Static Background || 
 |-|-|-|:----:|:---:|---|---|---|---|---|---|
-| Methods | Avg. EPE [m]↓ | EPE [m]↓ | AS [%]↑ | AR [%]↑ | EPE [m]↓ | AS [%]↑ | AR [%]↑ | EPE [m]↓ | AS [%]↑ | AR [%]↑ |
+| Methods | Avg. EPE m | EPE [m]↓ | AS [%]↑ | AR [%]↑ | EPE [m]↓ | AS [%]↑ | AR [%]↑ | EPE [m]↓ | AS [%]↑ | AR [%]↑ |
 <!-- |MBNSFP [37] | 1 | 1 |1 |1 |1 |1 |1 |1 |1 |1| -->
 
 
