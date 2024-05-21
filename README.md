@@ -81,10 +81,15 @@ tar -xvf argoverse2.tgz datasets/argoverse2/
 
 <!-- https://fletcher.github.io/MultiMarkdown-4/tables -->
 
-|||| Dynamic Foreground ||| Static Foreground ||| Static Background || 
+<p align="center">
+  <img src="docs/table.png" align="center" width="95%">
+</p>
+
+<!-- |||| Dynamic Foreground ||| Static Foreground ||| Static Background || 
 |-|-|-|:----:|:---:|---|---|---|---|---|---|
 | Methods | Avg. EPE m | EPE [m]↓ | AS [%]↑ | AR [%]↑ | EPE [m]↓ | AS [%]↑ | AR [%]↑ | EPE [m]↓ | AS [%]↑ | AR [%]↑ |
 <!-- |MBNSFP [37] | 1 | 1 |1 |1 |1 |1 |1 |1 |1 |1| -->
+ <!-- -->
 
 
 <!-- NSFP [20]
