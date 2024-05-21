@@ -5,30 +5,30 @@ import sys
 import glob
 import torch
 import matplotlib.pyplot as plt
+import yaml
 from tqdm import tqdm
-from sklearn.cluster import DBSCAN
-
 
 from pytorch3d.ops.knn import knn_points
-from torch_scatter import scatter
 
-from loss import sc_utils
-from models.chodosh import infer_chodosh, fit_NeuralPrior, fit_MB_NeuralPrior, let_it_flow
+from models.chodosh import infer_chodosh, fit_NeuralPrior, fit_MB_NeuralPrior
+from models import let_it_flow
 from argoverse2 import sample_argoverse2
 
 
-from params import cfg
+with open('config.yaml') as file:
+    config_file = yaml.load(file, Loader=yaml.FullLoader)
 
-# for RCI, use cuda:0
+cfg = config_file['cfg']
 use_gpu = 0
-device = torch.device(f'{cfg['device']}')
+device = torch.device(cfg['device'])
 available_gpus = cfg['nbr_of_devices']
 
 Argoverse2_seqs = 150
 seq_arrays = np.array_split(range(Argoverse2_seqs), available_gpus)
 
 
-model = cfg['let_it_flow']
+model = cfg['model']
+##### Implemented models
 # model = 'MBNSFP'
 # model = 'chodosh'
 # model = 'NP'
@@ -50,14 +50,11 @@ folder_path = cfg['folder_path']
 store_path = cfg['store_path']
 os.makedirs(store_path, exist_ok=True)
 
-for seq_id in seq_arrays[use_gpu]:
+for i, seq_id in tqdm(enumerate(seq_arrays[use_gpu]), total=len(seq_arrays[use_gpu])):
+    # time includes the loading of the data
+    global_list, poses, gt_flow, compensated_gt_flow_list, dynamic_list, category_indices_list, seq_names = \
+    sample_argoverse2(folder_path, seq_id, cfg=cfg)
 
-    global_list, poses, gt_flow, compensated_gt_flow_list, dynamic_list, category_indices_list = sample_argoverse2(seq_id)
-
-    
-    
-
-    # init clustering
     pcs = np.concatenate(global_list[:TEMPORAL_RANGE], axis=0)
 
     p1 = pcs[pcs[:,3] == frame][None, :,:3]
@@ -72,7 +69,7 @@ for seq_id in seq_arrays[use_gpu]:
 
         RigidLoss = let_it_flow.SC2_KNN_cluster_aware(p1, K=K, d_thre=d_thre)
 
-        for it in tqdm(range(cfg['iters'])): 
+        for it in range(cfg['iters']): 
             loss = 0
 
             dist, nn, _ = knn_points(p1 + f1, p2, lengths1=None, lengths2=None, K=1, return_nn=True)   
@@ -107,9 +104,10 @@ for seq_id in seq_arrays[use_gpu]:
         
     # store flow
     store_dict = {'p1' : p1.detach().cpu().numpy(), 'p2' : p2.detach().cpu().numpy(),
-                'c1' : c1.detach().cpu().numpy(), 'f1' : f1.detach().cpu().numpy(),
-                'gt_flow' : gt_flow[frame], 'compensated_gt_flow' : compensated_gt_flow_list[frame], 'dynamic' : dynamic_list[frame],
-                    'category_indices' : category_indices_list[frame], "model" : model}
+                  'c1' : c1.detach().cpu().numpy(), 'f1' : f1.detach().cpu().numpy(),
+                  'gt_flow' : gt_flow[frame], 'compensated_gt_flow' : compensated_gt_flow_list[frame], 'dynamic' : dynamic_list[frame],
+                  'category_indices' : category_indices_list[frame], "model" : model}
     
-    np.savez(store_path + f'/{frame:06d}.npz', **store_dict)
+    np.savez(store_path + f'/{seq_names[seq_id]}.npz', **store_dict)
     
+    if i == 3: break

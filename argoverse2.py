@@ -1,10 +1,17 @@
 import glob
 import numpy as np
+import os
+import yaml
 
-from params import folder_path
+with open('config.yaml') as file:
+    cfg = yaml.load(file, Loader=yaml.FullLoader)
 
-def sample_argoverse2(seq : int):
-
+def sample_argoverse2(folder_path, seq : int, cfg):
+    
+    max_radius = cfg['max_radius']
+    max_height = cfg['max_height']
+    min_height = cfg['min_height']
+    # device = cfg['device']
     sequence_path = sorted(glob.glob(folder_path + '/*/'))
 
     file_paths = sorted(glob.glob(sequence_path[seq] + '/*.npz'))
@@ -18,8 +25,9 @@ def sample_argoverse2(seq : int):
     category_indices_list = []
     pose_list = []
     global_pose_list = []
-    
+    seq_names = []
 
+    
     for t, d_path in enumerate(file_paths):
 
         data_file = np.load(d_path)
@@ -34,9 +42,7 @@ def sample_argoverse2(seq : int):
         pose = data_file['pose']
         flow_valid = data_file['flow_valid']
         
-        max_radius = 35
-        max_height = 3
-        min_height = 0.0
+        
 
 
         mask =(~ground1) & (pc1[..., 2] < max_height) & (pc1[..., 2] > min_height) & (np.linalg.norm(pc1, axis=-1) < max_radius) 
@@ -76,6 +82,8 @@ def sample_argoverse2(seq : int):
         category_indices_list.append(category_indices)
         pose_list.append(pose)
 
+        seq_names.append(os.path.dirname(d_path).split('/')[-1] + '_' + os.path.basename(d_path).split('.')[0])
+
     final_poses = []
     
     # construct path from relative poses
@@ -90,4 +98,4 @@ def sample_argoverse2(seq : int):
         global_pc = np.insert(global_pc, 3, i, axis=-1)
         global_list.append(global_pc)
     
-    return global_list, poses, gt_flow, compensated_gt_flow_list, dynamic_list, category_indices_list
+    return global_list, poses, gt_flow, compensated_gt_flow_list, dynamic_list, category_indices_list, seq_names

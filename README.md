@@ -1,4 +1,4 @@
-<h3 align="center"><strong>Let It Flow: Simultaneous Optimization of 3D Flow and Object Clustering</strong></h3>
+<h2 align="center"><strong>Let It Flow: Simultaneous Optimization of 3D Flow and Object Clustering</strong></h3>
  
 <p align="center">
   <img src="docs/comparison_v3.png" align="center" width="95%">
@@ -44,6 +44,7 @@
 - :balance_scale: **Consistency:** `Let It Flow` performs consistently accross different benchmark datasets.
 - :rainbow: **Generalizability:** `Let It Flow` does not have to adjust the parameter config for accurate results on the tested datasets. Improvements are observable even on new dynamic/object class error metrics.
 
+# Mechanism
 <p align="center">
   <img src="docs/contribution_v10.png" align="center" width="95%">
 </p>
@@ -60,25 +61,71 @@ conda activate let-it-flow
 conda install pytorch=1.13.0 torchvision pytorch-cuda=11.6 -c pytorch -c nvidia
 conda install -c fvcore -c iopath -c conda-forge fvcore iopath
 
-# pytorch3d
 git clone https://github.com/facebookresearch/pytorch3d.git
 cd pytorch3d && python3 -m pip install -e .
 cd ..
 
-# pytorch-scatter
 conda install pytorch-scatter -c pyg
 ```
 <!-- bash install.sh -->
 
 # DATA
-- Setup directory for extracting the data, visuals and experimental results
+Download and unpack the [Argoverse2](https://login.rci.cvut.cz/data/lidar_intensity/argoverse2.tgz) preprocessed sequence samples into the `dataset/argoverse2/` path.
+
 ```console
-BASE_PATH='path_where_to_store_data'
+tar -xvf argoverse2.tgz datasets/argoverse2/
 ```
-- Download [Argoverse2](https://login.rci.cvut.cz/data/lidar_intensity/argoverse2.tgz) preprocessed data
-<!-- - Download [Data](https://login.rci.cvut.cz/data/lidar_intensity/sceneflow/data_sceneflow.tgz) and unpack it to the folder $BASE_PATH/ -->
 
-<!-- ```console -->
-<!-- tar -xvf data_sceneflow.tgz $BASE_PATH/data/sceneflow -->
-<!-- ``` -->
+ Set up the config.yaml to include path to the `argoverse2 folder` and path to store the `results`.
 
+
+| | | | Dynamic Foreground | | | Static Foreground | | | Static Background | | 
+|-|-|-|:----:|:---:|---|---|---|---|---|---|
+| Methods | Avg. EPE [m]↓ | EPE [m]↓ | AS [%]↑ | AR [%]↑ | EPE [m]↓ | AS [%]↑ | AR [%]↑ | EPE [m]↓ | AS [%]↑ | AR [%]↑ |
+<!-- |MBNSFP [37] | 1 | 1 |1 |1 |1 |1 |1 |1 |1 |1| -->
+
+
+<!-- NSFP [20]
+ICP-flow [23]
+Chodosh [7]
+Ours 0.159
+0.083
+0.078
+0.070
+0.047 0.393
+0.141
+0.165
+0.132
+0.079 9.325
+39.85
+48.61
+41.80
+67.90 25.72
+71.69
+70.70
+75.49
+85.35 0.034
+0.059
+0.039
+0.049
+0.035 88.54
+75.15
+79.31
+77.29
+86.26 96.98
+91.14
+95.32
+93.74
+95.78 0.051
+0.048
+0.032
+0.028
+0.026 84.96
+81.96
+86.68
+87.97
+93.02 92.59
+93.56
+95.68
+95.30
+96.30 -->

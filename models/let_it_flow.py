@@ -140,4 +140,3 @@ def initial_clustering(global_list, frame, temporal_range, device, eps=0.3, min_
 
     return p1, p2, c1, c2, f1   # points, ids, flow initialed to 0
 
-def fit_let_it_flow()

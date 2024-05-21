@@ -12,4 +12,5 @@ cd ..
 
 
 conda install pytorch-scatter -c pyg
-# python3 -m pip install torch-scatter
+conda install matplotlib 
+conda install scikit-learn
