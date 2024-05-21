@@ -78,12 +78,18 @@ tar -xvf argoverse2.tgz datasets/argoverse2/
 
  Set up the config.yaml to include path to the `argoverse2 folder` and path to store the `results`.
 
+# Inference
+
+```console
+python3.10 run_optimization.py
+```
 
 <!-- https://fletcher.github.io/MultiMarkdown-4/tables -->
 
-<p align="center">
-  <img src="docs/table.png" align="center" width="95%">
-</p>
+<!-- # Results on Argoverse2 -->
+<!-- <p align="center"> -->
+  <!-- <img src="docs/table.png" align="center" width="95%"> -->
+<!-- </p> -->
 
 <!-- |||| Dynamic Foreground ||| Static Foreground ||| Static Background || 
 |-|-|-|:----:|:---:|---|---|---|---|---|---|
