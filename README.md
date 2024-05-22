@@ -107,6 +107,16 @@ If you find our work helpful, please consider citing our paper:
 <br />
 This work is under the <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
+## Acknowledgement
+This work is developed based on the open-source repositories and baselines (
+[NSFP](https://github.com/Lilac-Lee/Neural_Scene_Flow_Prior/tree/main),
+[MBNSFP](https://github.com/kavisha725/MBNSF/tree/main),
+[Chodosh](https://github.com/kylevedder/zeroflow))
+
+
+
+:heart: We thank to the contributors from the above open-source repositories.
+
 <!-- instances into background in the init opt -->
 
 <!-- https://fletcher.github.io/MultiMarkdown-4/tables -->
