@@ -39,12 +39,12 @@
 
 
 
-### :sparkles: Highlight
+### :sparkles: Performance
 - :rocket: **Scalability:** `Let It Flow` does not require training or supervision as an optimization-based method and works on out-of-distribution data. 
 - :rainbow: **Real Scene Flow:** `Let It Flow` performs consistently accross real world benchmark datasets and not only on StereoKITTI. Improvements are observable even on new dynamic/object class error metrics.
 - :balance_scale: **Generalizability:** `Let It Flow` does not have to adjust the parameter config for accurate results on the tested datasets.
 
-# Mechanism
+## Mechanism
 <p align="center">
   <img src="docs/contribution_v10.png" align="center" width="95%">
 </p>
@@ -108,72 +108,12 @@ If you find our work helpful, please consider citing our paper:
 This work is under the <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 ## Acknowledgement
-This work is developed based on the open-source repositories and baselines (
+This work is developed based on the open-source repositories and baselines:
+[KISS-ICP](https://github.com/PRBonn/kiss-icp),
 [NSFP](https://github.com/Lilac-Lee/Neural_Scene_Flow_Prior/tree/main),
 [MBNSFP](https://github.com/kavisha725/MBNSF/tree/main),
-[Chodosh](https://github.com/kylevedder/zeroflow))
+[Chodosh](https://github.com/kylevedder/zeroflow)
 
 
 
 :heart: We thank to the contributors from the above open-source repositories.
-
-<!-- instances into background in the init opt -->
-
-<!-- https://fletcher.github.io/MultiMarkdown-4/tables -->
-
-<!-- # Results on Argoverse2 -->
-<!-- <p align="center"> -->
-  <!-- <img src="docs/table.png" align="center" width="95%"> -->
-<!-- </p> -->
-
-<!-- |||| Dynamic Foreground ||| Static Foreground ||| Static Background || 
-|-|-|-|:----:|:---:|---|---|---|---|---|---|
-| Methods | Avg. EPE m | EPE [m]↓ | AS [%]↑ | AR [%]↑ | EPE [m]↓ | AS [%]↑ | AR [%]↑ | EPE [m]↓ | AS [%]↑ | AR [%]↑ |
-<!-- |MBNSFP [37] | 1 | 1 |1 |1 |1 |1 |1 |1 |1 |1| -->
- <!-- -->
-
-
-<!-- NSFP [20]
-ICP-flow [23]
-Chodosh [7]
-Ours 0.159
-0.083
-0.078
-0.070
-0.047 0.393
-0.141
-0.165
-0.132
-0.079 9.325
-39.85
-48.61
-41.80
-67.90 25.72
-71.69
-70.70
-75.49
-85.35 0.034
-0.059
-0.039
-0.049
-0.035 88.54
-75.15
-79.31
-77.29
-86.26 96.98
-91.14
-95.32
-93.74
-95.78 0.051
-0.048
-0.032
-0.028
-0.026 84.96
-81.96
-86.68
-87.97
-93.02 92.59
-93.56
-95.68
-95.30
-96.30 -->
