@@ -51,7 +51,7 @@
 
 # Installation
 
-Tested with version of Python == 3.10, [PyTorch3d](https://github.com/facebookresearch/pytorch3d), [PyTorch Scatter](https://github.com/rusty1s/pytorch_scatter/tree/master)
+Tested with Python==3.10, [PyTorch3d](https://github.com/facebookresearch/pytorch3d), [PyTorch Scatter](https://github.com/rusty1s/pytorch_scatter/tree/master)
 See install.sh for installation of libraries or run it directly:
 
 ```console
@@ -81,8 +81,10 @@ tar -xvf argoverse2.tgz datasets/argoverse2/
 # Inference
 
 ```console
-python3.10 run_optimization.py
+python run_optimization.py
 ```
+
+<!-- instances into background in the init opt -->
 
 <!-- https://fletcher.github.io/MultiMarkdown-4/tables -->
 
