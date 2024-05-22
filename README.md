@@ -41,8 +41,8 @@
 
 ### :sparkles: Highlight
 - :rocket: **Scalability:** `Let It Flow` does not require training or supervision as an optimization-based method and works on out-of-distribution data. 
-- :balance_scale: **Consistency:** `Let It Flow` performs consistently accross different benchmark datasets.
-- :rainbow: **Generalizability:** `Let It Flow` does not have to adjust the parameter config for accurate results on the tested datasets. Improvements are observable even on new dynamic/object class error metrics.
+- :rainbow: **Real Scene Flow:** `Let It Flow` performs consistently accross real world benchmark datasets and not only on StereoKITTI. Improvements are observable even on new dynamic/object class error metrics.
+- :balance_scale: **Generalizability:** `Let It Flow` does not have to adjust the parameter config for accurate results on the tested datasets.
 
 # Mechanism
 <p align="center">
