@@ -49,7 +49,7 @@
   <img src="docs/contribution_v10.png" align="center" width="95%">
 </p>
 
-# Installation
+## Installation
 
 Tested with Python==3.10, [PyTorch3d](https://github.com/facebookresearch/pytorch3d), [PyTorch Scatter](https://github.com/rusty1s/pytorch_scatter/tree/master)
 See install.sh for installation of libraries or run it directly:
@@ -69,7 +69,7 @@ conda install pytorch-scatter -c pyg
 ```
 <!-- bash install.sh -->
 
-# DATA
+## Dataset
 Download and unpack the [Argoverse2](https://login.rci.cvut.cz/data/lidar_intensity/argoverse2.tgz) preprocessed sequence samples into the `dataset/argoverse2/` path.
 
 ```console
@@ -78,11 +78,34 @@ tar -xvf argoverse2.tgz datasets/argoverse2/
 
  Set up the config.yaml to include path to the `argoverse2 folder` and path to store the `results`.
 
-# Inference
+## Inference
+
+To infer the model on Argoverse2 dataset sequences, please run the following:
 
 ```console
 python run_optimization.py
 ```
+
+The script will store the outputs (and inputs with Ground truth) into the `store_path` for metric calculation.
+
+## Citation
+
+If you find our work helpful, please consider citing our paper:
+
+```bibtex
+@misc{vacek2024lif,
+      title={Let It Flow: Simultaneous Optimization of 3D Flow and Object Clustering}, 
+      author={Patrik Vacek and David Hurych and Tomáš Svoboda and Karel Zimmermann},
+      year={2024},
+      eprint={2404.08363},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
+## License
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+<br />
+This work is under the <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 <!-- instances into background in the init opt -->
 

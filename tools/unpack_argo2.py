@@ -5,7 +5,7 @@ import numpy as np
 from av2.torch.data_loaders.scene_flow import SceneFlowDataloader
 
 dataset = SceneFlowDataloader('/home/patrik/rci/mnt/personal/vacekpa2/data', 'argoverse2', 'val')
-# TODO - push directly to CMP
+
 store_path = '/home/patrik/cmp/data/argoverse2/sensor/processed_val/'
 #
 last_uuid = '---'
