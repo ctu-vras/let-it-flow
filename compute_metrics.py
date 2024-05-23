@@ -3,147 +3,81 @@ import os
 import glob
 import torch
 import pandas as pd
-from ops.metric.sceneflow import SceneFlowMetric, ThreewayFlowMetric
-# Dummy remap
-class_remap = {0 : 'Background',
-               5 : 'Road Sign?',
-               6 : 'Truck',
-            #    11 : "Van",
-               15 : 'Cyclist',
-               17 : 'Pedestrian',
-               19 : 'Vehicle',
-            #    21 : 'Sign?',
-               28 : 'IDK'}
+import matplotlib.pyplot as plt
 
-### USe for visuals
-# from vis.utils import flow_to_rgb
-# flow_KNN = flow_to_rgb(flow[0].detach().cpu().numpy(), flow_max_radius=None, background='bright') / 255.
+from ops.metric.sceneflow import SceneFlowMetric, ThreewayFlowMetric
+
+class_remap = {'Background' : 0,
+               'Road Sign?' : 5,
+               'Truck' : 6,
+            #    11 : "Van",
+               'Cyclist' : 15,
+               'Pedestrian' : 17,
+               'Vehicle' : 19,
+            #    21 : 'Sign?',
+               'IDK' : 28,
+               'Overall' : None}
+
+foreground_cls = ['Pedestrian', 'Cyclist', 'Vehicle', 'Truck']
+background_cls = ['Background']
+
+metric_dict = {k : ThreewayFlowMetric() for k in class_remap.keys()}
+metric_dict["Overall"] = ThreewayFlowMetric()
+# ### USe for visuals
+# # from vis.utils import flow_to_rgb
+# # flow_KNN = flow_to_rgb(flow[0].detach().cpu().numpy(), flow_max_radius=None, background='bright') / 255.
 
 exp_folder = 'results/argoverse2/'
 files = sorted(glob.glob(exp_folder + '/*.npz'))
 
-ThreewayMetric = ThreewayFlowMetric()
-PedsFlowMetric = ThreewayFlowMetric()
-VehsFlowMetric =  ThreewayFlowMetric()
-CycFlowMetric =  ThreewayFlowMetric()
-TruckFlowMetric =  ThreewayFlowMetric()
+
+# ThreewayClass_list = []
+from vis.deprecated_vis import visualize_points3D   
+   
 
 for file in files:
-    data = np.load(file, allow_pickle=True)
+   data = np.load(file, allow_pickle=True)
 
-    p1 = data['p1']
-    p2 = data['p2']
-    f1 = torch.from_numpy(data['f1'])
-    dynamic = torch.from_numpy(data['dynamic'])
-    category_indices = torch.from_numpy(data['category_indices'])
-    gt_flow = torch.from_numpy(data['compensated_gt_flow'][None])  # correct
+   p1 = data['p1'][0]
+   p2 = data['p2'][0]
+   f1 = torch.from_numpy(data['f1'])
+   dynamic = torch.from_numpy(data['dynamic'])
+   category_indices = torch.from_numpy(data['category_indices'])
+   gt_flow = torch.from_numpy(data['compensated_gt_flow'][None])  # correct
 
-    map_dict = {'foreground_cls' : [6, 19, 17, 15], # bicyclist vs bicycle
-                'background_cls' : [0],
-                }
-    
-    # pred_flow, gt_flow, eval_time, dynamic_foreground_mask, static_foreground_mask, static_background_mask
-    foreground = (category_indices == 6) | (category_indices == 19) | (category_indices == 17) | (category_indices == 15)
-    
-    dynamic_foreground_mask = dynamic & foreground
-    static_foreground_mask = ~dynamic & foreground
-    static_background_mask = ~dynamic & category_indices == 0
+   
+   foreground_points = [category_indices == class_remap[f] for f in foreground_cls]#.astype(bool)
+   background_points = [category_indices == class_remap[b] for b in background_cls]#.astype(bool)
 
-    # print(gt_flow.shape, f1.shape)
-    ThreewayMetric.update(f1, gt_flow, -1, dynamic_foreground_mask, static_foreground_mask, static_background_mask)
+   
+   foreground_points = torch.stack(foreground_points, dim=0).any(dim=0)
+   background_points = torch.stack(background_points, dim=0).any(dim=0)
+   
+   ### STORE METRICS
+   for k in metric_dict.keys():
+      if k == 'Overall': 
+         mask = torch.ones_like(category_indices).bool()
+      else:
+         mask = category_indices == class_remap[k]
 
-    # peds
-    peds_mask = (category_indices == 17)
-    dynamic_foreground_mask = dynamic & peds_mask
-    static_foreground_mask = ~dynamic & peds_mask
-    static_background_mask = torch.zeros_like(dynamic, dtype=bool)
+      dynamic_foreground_mask = dynamic & mask
+      static_foreground_mask = ~dynamic & mask
+      static_background_mask = ~dynamic & mask
 
-    PedsFlowMetric.update(f1, gt_flow, -1, dynamic_foreground_mask, static_foreground_mask, static_background_mask)
+      metric_dict[k].update(f1, gt_flow, -1, dynamic_foreground_mask, static_foreground_mask, static_background_mask)
+   
+   
+      
+   ### PRINT METRICS
+   for k in metric_dict.keys():
+      T_D = metric_dict[k].DFG_metric.get_metric().mean()['EPE']
+      T_S = metric_dict[k].SFG_metric.get_metric().mean()['EPE']
+      T_B = metric_dict[k].SBG_metric.get_metric().mean()['EPE']
 
-    # vehs
-    vehs_mask = (category_indices == 19)
-    dynamic_foreground_mask = dynamic & vehs_mask
-    static_foreground_mask = ~dynamic & vehs_mask
-    static_background_mask = torch.zeros_like(dynamic, dtype=bool)
+      # break
+      Average = (T_D + T_S + T_B) / 3
 
-    VehsFlowMetric.update(f1, gt_flow, -1, dynamic_foreground_mask, static_foreground_mask, static_background_mask)
-
-    # cycs
-    cycs_mask = (category_indices == 15)
-    dynamic_foreground_mask = dynamic & cycs_mask
-    static_foreground_mask = ~dynamic & cycs_mask
-    static_background_mask = torch.zeros_like(dynamic, dtype=bool)
-
-    CycFlowMetric.update(f1, gt_flow, -1, dynamic_foreground_mask, static_foreground_mask, static_background_mask)
-
-    # trucks
-    trucks_mask = (category_indices == 6)
-    dynamic_foreground_mask = dynamic & trucks_mask
-    static_foreground_mask = ~dynamic & trucks_mask
-    static_background_mask = torch.zeros_like(dynamic, dtype=bool)
-
-    TruckFlowMetric.update(f1, gt_flow, -1, dynamic_foreground_mask, static_foreground_mask, static_background_mask)
-
-T_D = ThreewayMetric.DFG_metric.get_metric().mean()['EPE']
-T_S = ThreewayMetric.SFG_metric.get_metric().mean()['EPE']
-T_B = ThreewayMetric.SBG_metric.get_metric().mean()['EPE']
-
-# break
-Average = (T_D + T_S + T_B) / 3
-
-
-print('Threeway',  f"{Average:.3f}", f'{T_D:.3f}', f'{T_S:.3f}', f'{T_B:.3f}')
-
-print("THREEWAY METRIC ------")
-ThreewayMetric.print_metric()
-
-print('\n\n\n')
-print("PEDS METRIC ---------")
-
-T_D = PedsFlowMetric.DFG_metric.get_metric().mean()['EPE']
-T_S = PedsFlowMetric.SFG_metric.get_metric().mean()['EPE']
-# T_B = PedsFlowMetric.SBG_metric.get_metric().mean()['EPE']
-
-Average = (T_D + T_S) / 2   # there is no background for dynamic class
-
-print( 'Peds', f"{Average:.3f}",  "&",f'{T_D:.3f}', "&", f'{T_S:.3f}', end=' ')
-# PedsFlowMetric.print_metric()
-
-
-# print('\n\n\n')
-# print("CYCS METRIC ---------")
-T_D = CycFlowMetric.DFG_metric.get_metric().mean()['EPE']
-T_S = CycFlowMetric.SFG_metric.get_metric().mean()['EPE']
-# T_B = PedsFlowMetric.SBG_metric.get_metric().mean()['EPE']
-
-Average = (T_D + T_S) / 2   # there is no background for dynamic class
-
-print( 'Cycs', f"{Average:.3f}",  "&", f'{T_D:.3f}',  "&", f'{T_S:.3f}', end=' ')
-
-# print('\n\n\n')
-# print("VEHS METRIC ---------")
-T_D = VehsFlowMetric.DFG_metric.get_metric().mean()['EPE']
-T_S = VehsFlowMetric.SFG_metric.get_metric().mean()['EPE']
-# T_B = PedsFlowMetric.SBG_metric.get_metric().mean()['EPE']
-
-Average = (T_D + T_S) / 2   # there is no background for dynamic class
-
-print( 'Vehs', f"{Average:.3f}", "&", f'{T_D:.3f}',  "&", f'{T_S:.3f}', end=' ')
-# VehsFlowMetric.print_metric()
-
-
-# CycFlowMetric.print_metric()
-
-# print('\n\n\n')
-# print("TRUCKS METRIC ---------")
-T_D = TruckFlowMetric.DFG_metric.get_metric().mean()['EPE']
-T_S = TruckFlowMetric.SFG_metric.get_metric().mean()['EPE']
-T_B = PedsFlowMetric.SBG_metric.get_metric().mean()['EPE']
-
-Average = (T_D + T_S) / 2   # there is no background for dynamic class
-
-# print('Truck', f"{Average:.3f}",  "&",f'{T_D:.3f}',  "&",f'{T_S:.3f}')
-# TruckFlowMetric.print_metric()
-print('\n------\n')
-
+      print(f'Threeway EPE  of {k}:',  f"{Average:.3f}", f'{T_D:.3f}', f'{T_S:.3f}', f'{T_B:.3f}')
+   # todo to table
+   break
 
