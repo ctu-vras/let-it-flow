@@ -20,7 +20,12 @@ with open('config.yaml') as file:
 
 cfg = config_file['cfg']
 use_gpu = 0
-device = torch.device(cfg['device'])
+
+if torch.cuda.is_available():
+    device = torch.device(cfg['device'])
+else:
+    device = torch.device('cpu')
+    
 available_gpus = cfg['nbr_of_devices']
 
 Argoverse2_seqs = 150

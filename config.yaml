@@ -29,6 +29,6 @@
           'store_path' : 'results/argoverse2/',
 
           # Devices:
-          'device' : 'cpu',
+          'device' : 'cuda:0',
           'nbr_of_devices' : 1,    
   }
