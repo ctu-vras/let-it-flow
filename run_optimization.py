@@ -105,7 +105,7 @@ for i, seq_id in tqdm(enumerate(seq_arrays[use_gpu]), total=len(seq_arrays[use_g
             optimizer.step()
             optimizer.zero_grad()
 
-        
+    print(p1.device)
         
     elif model == 'chodosh':
         f1 = infer_chodosh(p1[0], p1[0], p2[0], max_iters=cfg['iters']).unsqueeze(0)
