@@ -31,13 +31,10 @@ metric_dict["Overall"] = ThreewayFlowMetric()
 # # flow_KNN = flow_to_rgb(flow[0].detach().cpu().numpy(), flow_max_radius=None, background='bright') / 255.
 
 with open('config.yaml') as file:    
-    cfg = yaml.load(file, Loader=yaml.FullLoader)
+    cfg = yaml.load(file, Loader=yaml.FullLoader)['cfg']
 
 exp_folder = cfg['folder_path'] + f'/{model}/'
 files = sorted(glob.glob(exp_folder + '/*.npz'))
-
-breakpoint()
-
    
 
 for file in files:
