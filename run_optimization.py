@@ -71,12 +71,13 @@ for i, seq_id in tqdm(enumerate(seq_arrays[use_gpu]), total=len(seq_arrays[use_g
 
     p1 = pcs[pcs[:,3] == frame][None, :,:3]
     p2 = pcs[pcs[:,3] == frame + 1][None, :,:3]
-
-
+    
+    
+    
     if model == 'let_it_flow':
 
         p1, p2, c1, c2, f1 = let_it_flow.initial_clustering(global_list, frame, TEMPORAL_RANGE, device, eps=eps, min_samples=min_samples, z_scale=0.5)
-
+        
         optimizer = torch.optim.Adam([f1], lr=lr)
 
         RigidLoss = let_it_flow.SC2_KNN_cluster_aware(p1, K=K, d_thre=d_thre)

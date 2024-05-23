@@ -105,9 +105,7 @@ def sample_argoverse2(folder_path, seq : int, cfg):
         pose = data_file['pose']
         flow_valid = data_file['flow_valid']
         
-        
-
-
+    
         mask =(~ground1) & (pc1[..., 2] < max_height) & (pc1[..., 2] > min_height) & (np.linalg.norm(pc1, axis=-1) < max_radius) 
         mask = mask.astype(bool)
 

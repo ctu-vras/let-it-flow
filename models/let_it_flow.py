@@ -123,14 +123,11 @@ def initial_clustering(global_list, frame, temporal_range, device, eps=0.3, min_
     clusters = DBSCAN(eps=eps, min_samples=min_samples).fit_predict(scaled_cluster_pc1[:,:3])
 
 
-    frame = 2
     p1 = to_cluster_pc1[to_cluster_pc1[:,3] == frame][None, :,:3]
     p2 = to_cluster_pc1[to_cluster_pc1[:,3] == frame + 1][None, :,:3]
 
     c1 = clusters[to_cluster_pc1[:,3] == frame]
     c2 = clusters[to_cluster_pc1[:,3] == frame + 1]
-
-
     
     f1 = torch.zeros(p1.shape, device=device, requires_grad=True)
     p1 = torch.tensor(p1, device=device, dtype=torch.float32)
