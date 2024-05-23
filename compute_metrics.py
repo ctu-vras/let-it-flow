@@ -1,12 +1,15 @@
 import numpy as np
 import os
+import sys
 import glob
 import torch
 import pandas as pd
 import matplotlib.pyplot as plt
+import yaml
 
 from ops.metric.sceneflow import SceneFlowMetric, ThreewayFlowMetric
 
+model = str(sys.argv[1])
 class_remap = {'Background' : 0,
                'Road Sign?' : 5,
                'Truck' : 6,
@@ -27,12 +30,14 @@ metric_dict["Overall"] = ThreewayFlowMetric()
 # # from vis.utils import flow_to_rgb
 # # flow_KNN = flow_to_rgb(flow[0].detach().cpu().numpy(), flow_max_radius=None, background='bright') / 255.
 
-exp_folder = 'results/argoverse2/'
+with open('config.yaml') as file:    
+    cfg = yaml.load(file, Loader=yaml.FullLoader)
+
+exp_folder = cfg['folder_path'] + f'/{model}/'
 files = sorted(glob.glob(exp_folder + '/*.npz'))
 
+breakpoint()
 
-# ThreewayClass_list = []
-from vis.deprecated_vis import visualize_points3D   
    
 
 for file in files:
