@@ -51,15 +51,10 @@ eps = cfg['eps']
 min_samples = cfg['min_samples']
 lr = cfg['lr']
 
-# changes for tests
-# import socket
-# if socket.gethostname().capitalize() == 'Patrik':
+
 folder_path = cfg['folder_path']
 store_path = cfg['store_path'] + '/' + model + '/'
 
-# else:
-#     folder_path = '/mnt/personal/vacekpa2/data/argoverse2/'
-#     store_path = '/mnt/personal/vacekpa2/data/argoverse2_results/'
 os.makedirs(store_path, exist_ok=True)
 
 for i, seq_id in tqdm(enumerate(seq_arrays[use_gpu]), total=len(seq_arrays[use_gpu])):
@@ -74,7 +69,7 @@ for i, seq_id in tqdm(enumerate(seq_arrays[use_gpu]), total=len(seq_arrays[use_g
     
     
     
-    if model == 'let_it_flow':
+    if model == 'lif':
 
         p1, p2, c1, c2, f1 = let_it_flow.initial_clustering(global_list, frame, TEMPORAL_RANGE, device, eps=eps, min_samples=min_samples, z_scale=0.5)
         
@@ -82,7 +77,7 @@ for i, seq_id in tqdm(enumerate(seq_arrays[use_gpu]), total=len(seq_arrays[use_g
 
         RigidLoss = let_it_flow.SC2_KNN_cluster_aware(p1, K=K, d_thre=d_thre)
 
-        for it in range(cfg['iters']): 
+        for it in tqdm(range(cfg['iters'])): 
             loss = 0
 
             dist, nn, _ = knn_points(p1 + f1, p2, lengths1=None, lengths2=None, K=1, return_nn=True)   
@@ -123,4 +118,4 @@ for i, seq_id in tqdm(enumerate(seq_arrays[use_gpu]), total=len(seq_arrays[use_g
     
     np.savez(store_path + f'/{seq_names[seq_id]}.npz', **store_dict)
     
-    if i == 1: break
+    # if i == 1: break
