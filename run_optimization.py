@@ -57,9 +57,12 @@ store_path = cfg['store_path'] + '/' + model + '/'
 
 os.makedirs(store_path, exist_ok=True)
 
+sequence_path = sorted(glob.glob(folder_path + '/*/'))
+seq_names = [path.split('/')[-1] for path in sequence_path]
+
 for i, seq_id in tqdm(enumerate(seq_arrays[use_gpu]), total=len(seq_arrays[use_gpu])):
     # time includes the loading of the data
-    global_list, poses, gt_flow, compensated_gt_flow_list, dynamic_list, category_indices_list, seq_names = \
+    global_list, poses, gt_flow, compensated_gt_flow_list, dynamic_list, category_indices_list, _ = \
     sample_argoverse2(folder_path, seq_id, cfg=cfg)
 
     pcs = np.concatenate(global_list[:TEMPORAL_RANGE], axis=0)
@@ -116,6 +119,6 @@ for i, seq_id in tqdm(enumerate(seq_arrays[use_gpu]), total=len(seq_arrays[use_g
                   'gt_flow' : gt_flow[frame], 'compensated_gt_flow' : compensated_gt_flow_list[frame], 'dynamic' : dynamic_list[frame],
                   'category_indices' : category_indices_list[frame], "model" : model}
     
-    np.savez(store_path + f'/{seq_names[seq_id]}.npz', **store_dict)
+    np.savez(store_path + f'/{seq_names[seq_id]}.npz', **store_dict)    # this does not generalize to multiple gpu optimization!
     
     # if i == 1: break
