@@ -25,7 +25,7 @@ if torch.cuda.is_available():
     device = torch.device(cfg['device'])
 else:
     device = torch.device('cpu')
-    
+
 available_gpus = cfg['nbr_of_devices']
 
 Argoverse2_seqs = 150
@@ -55,7 +55,7 @@ lr = cfg['lr']
 # import socket
 # if socket.gethostname().capitalize() == 'Patrik':
 folder_path = cfg['folder_path']
-store_path = cfg['store_path']
+store_path = cfg['store_path'] + '/' + model + '/'
 
 # else:
 #     folder_path = '/mnt/personal/vacekpa2/data/argoverse2/'

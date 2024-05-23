@@ -26,7 +26,7 @@
 
           # Folders:
           'folder_path' : 'datasets/argoverse2/',
-          'store_path' : 'results/argoverse2/',
+          'store_path' : 'datasets/argoverse2/',
 
           # Devices:
           'device' : 'cuda:0',
