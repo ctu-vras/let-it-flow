@@ -6,6 +6,69 @@ import yaml
 with open('config.yaml') as file:
     cfg = yaml.load(file, Loader=yaml.FullLoader)
 
+def unpack_one_frame(dataset, i):
+    ''' 
+    Unpacks one frame from the Argoverse SceneFlow dataset.
+    
+    Args:
+        dataset (Dataset): The dataset containing the frames.
+        i (int): The index of the frame to unpack.
+        
+    Returns:
+        dict: A dictionary containing the unpacked frame data.
+    '''
+    
+    data = dataset[i]
+
+    # lidar1 = data[0]
+    pc1 = data[0].lidar.as_tensor().detach().cpu().numpy()
+    ground1 = data[0].is_ground.detach().cpu().numpy()
+
+    # lidar2 = data[1]
+    pc2 = data[1].lidar.as_tensor().detach().cpu().numpy()
+    ground2 = data[1].is_ground.detach().cpu().numpy()
+
+    uuid1 = data[0].sweep_uuid[0]
+    uuid2 = data[1].sweep_uuid[0]
+    timestamp = data[0].sweep_uuid[1]
+
+    if uuid1 != uuid2: 
+        print('uuid mismatched')
+
+    relative_pose = data[2].matrix().detach().cpu().numpy()[0]	# batch
+
+    pose1 = data[0].city_SE3_ego.matrix()   # compute it w.r.t ego position in first frame
+    pose2 = data[1].city_SE3_ego.matrix()
+
+    flow = data[3].flow.detach().cpu().numpy()
+    flow_valid = data[3].is_valid.detach().cpu().numpy()
+    category_indices = data[3].category_indices.detach().cpu().numpy()
+    dynamic = data[3].is_dynamic.detach().cpu().numpy()
+    class_names = data[0].cuboids.category
+
+    d_dict = {'pc1' : pc1,
+                'pc2' : pc2,
+                'pose1' : pose1,
+                'pose2' : pose2,
+                'relative_pose' : relative_pose,            
+                'ground1' : ground1,
+                'ground2' : ground2,
+                'flow' : flow,
+                'flow_valid' : flow_valid,
+                'dynamic' : dynamic,
+                'category_indices' : category_indices,
+                'uuid1' : uuid1,
+                'uuid2' : uuid2,
+                'class_names' : class_names
+                
+                }
+
+    # transform to second point cloud, pose is relative pc1 -> pc2
+    sync_pts = np.dot(relative_pose[:3, :3], pc1[:,:3].T).T + relative_pose[:3, 3]
+    sync_pts = np.concatenate((sync_pts, pc1[:, 3:4]), axis=1)
+    
+    return d_dict
+
 def sample_argoverse2(folder_path, seq : int, cfg):
     
     max_radius = cfg['max_radius']

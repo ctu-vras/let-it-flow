@@ -12,7 +12,7 @@ from pytorch3d.ops.knn import knn_points
 
 from models.chodosh import infer_chodosh, fit_NeuralPrior, fit_MB_NeuralPrior
 from models import let_it_flow
-from argoverse2 import sample_argoverse2
+from data.argoverse2 import sample_argoverse2
 
 
 with open('config.yaml') as file:

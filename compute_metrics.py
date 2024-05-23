@@ -3,7 +3,7 @@ import os
 import glob
 import torch
 import pandas as pd
-from metric import SceneFlowMetric, ThreewayFlowMetric
+from ops.metric.sceneflow import SceneFlowMetric, ThreewayFlowMetric
 # Dummy remap
 class_remap = {0 : 'Background',
                5 : 'Road Sign?',
@@ -15,13 +15,9 @@ class_remap = {0 : 'Background',
             #    21 : 'Sign?',
                28 : 'IDK'}
 
-
-
-
-# for model in sorted(os.listdir(f'{os.path.expanduser("~")}/data/exps/argoverse2')):
-    # if not model.startswith('ours') : continue
-# for model in ['w_freespace', 'without_free', 'chodosh', 'NP']:
-    # print('\n', model.capitalize())
+### USe for visuals
+# from vis.utils import flow_to_rgb
+# flow_KNN = flow_to_rgb(flow[0].detach().cpu().numpy(), flow_max_radius=None, background='bright') / 255.
 
 exp_folder = 'results/argoverse2/'
 files = sorted(glob.glob(exp_folder + '/*.npz'))
