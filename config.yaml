@@ -10,7 +10,7 @@
           'd_thre' : 0.03,
           'eps' : 0.3,
           'min_samples' : 1,
-          'iters' : 1,  # Experiments run with 1500
+          'iters' : 1500,  # Experiments run with 1500
           
           # Data:
           'max_radius' : 35.0,
