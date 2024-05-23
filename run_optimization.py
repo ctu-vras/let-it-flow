@@ -123,4 +123,4 @@ for i, seq_id in tqdm(enumerate(seq_arrays[use_gpu]), total=len(seq_arrays[use_g
     
     np.savez(store_path + f'/{seq_names[seq_id]}.npz', **store_dict)
     
-    if i == 3: break
+    if i == 1: break

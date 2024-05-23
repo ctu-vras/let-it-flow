@@ -81,3 +81,7 @@ for file in files:
    # todo to table
    break
 
+
+# from vis.deprecated_vis import visualize_flow3d
+# visualize_flow3d(p1, p2, f1)
+# visualize_flow3d(p1, p2, gt_flow[0])
