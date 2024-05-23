@@ -88,6 +88,16 @@ python run_optimization.py
 
 The script will store the outputs (and inputs with Ground truth) into the `store_path` for metric calculation.
 
+## Generation of EPE metrics
+
+After the model inference (takes about 2 hours on GPU), generate metrics of `Let It Flow (lif)` by running:
+
+```console
+python compute_metrics.py lif
+```
+
+Result will print the End-Point-Error per class annotated in Argoverse2 and also overall ThreewayEPE.
+
 ## Citation
 
 If you find our work helpful, please consider citing our paper:
