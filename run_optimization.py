@@ -46,8 +46,15 @@ eps = cfg['eps']
 min_samples = cfg['min_samples']
 lr = cfg['lr']
 
+# changes for tests
+# import socket
+# if socket.gethostname().capitalize() == 'Patrik':
 folder_path = cfg['folder_path']
 store_path = cfg['store_path']
+
+# else:
+#     folder_path = '/mnt/personal/vacekpa2/data/argoverse2/'
+#     store_path = '/mnt/personal/vacekpa2/data/argoverse2_results/'
 os.makedirs(store_path, exist_ok=True)
 
 for i, seq_id in tqdm(enumerate(seq_arrays[use_gpu]), total=len(seq_arrays[use_gpu])):
