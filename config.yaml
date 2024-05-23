@@ -1,7 +1,7 @@
   cfg : { 'frame' : 2,
           'dist_w' : 2.,
           'free_w' : 0.,
-          'TEMPORAL_RANGE' : 5,
+          'TEMPORAL_RANGE' : 1,
           'sc_w' : 1.,
           'lr' : 0.03,
           'trunc_dist' : 0.5,
