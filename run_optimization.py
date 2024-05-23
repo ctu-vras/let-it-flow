@@ -69,8 +69,8 @@ for i, seq_id in tqdm(enumerate(seq_arrays[use_gpu]), total=len(seq_arrays[use_g
 
     pcs = np.concatenate(global_list[:TEMPORAL_RANGE], axis=0)
 
-    p1 = pcs[pcs[:,3] == frame][None, :,:3].to(device)
-    p2 = pcs[pcs[:,3] == frame + 1][None, :,:3].to(device)
+    p1 = pcs[pcs[:,3] == frame][None, :,:3]
+    p2 = pcs[pcs[:,3] == frame + 1][None, :,:3]
 
 
     if model == 'let_it_flow':
