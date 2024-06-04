@@ -178,4 +178,4 @@ plt.close()
 plt.plot(reconstructed_poses[:,0], reconstructed_poses[:,1], label='orig')
 plt.plot(smoothed_x[:,0], smoothed_x[:,1], label='smoothed')
 
-imshow(plt)
+plt.savefig('example.png')
