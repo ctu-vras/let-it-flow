@@ -1,3 +1,4 @@
+from tqdm import tqdm
 from vis import *
 from av2.torch.data_loaders.scene_flow import SceneFlowDataloader
 
@@ -78,8 +79,8 @@ for i, t in enumerate(np.unique(pcds[:,3])):
 
 # visualize_points3D(to_cluster_pc[:,:3], init_ids)
 
-visualize_multiple_pcls(*obj_pts_list)
-visualize_points3D(to_cluster_pc[:,:3], init_ids)
+# visualize_multiple_pcls(*obj_pts_list)
+# visualize_points3D(to_cluster_pc[:,:3], init_ids)
 # KISS-ICP
 # visualize_multiple_pcls(*obj_pts_list)
 # store obj_pts_list as pcd points
@@ -107,7 +108,7 @@ trans_list = []
 
 reference_frame = 0 # len(obj_pts_list) - 1
 
-for t in range(0, len(obj_pts_list)):
+for t in tqdm(range(0, len(obj_pts_list))):
     if t == reference_frame: 
         trans_list.append(np.eye(4))
         continue
@@ -152,7 +153,7 @@ smoothed_x = savgol_filter(reconstructed_poses, 4, 2, axis=0)
 
 # try to use smoothed path as initial guess
 
-# visualize_multiple_pcls(*global_list)
+visualize_multiple_pcls(*global_list)
 
 
 # Downsample in open3d
@@ -172,7 +173,7 @@ visualize_multiple_pcls(*[np.concatenate(shape_along_time)] + obj_pts_list)
 # visualize_multiple_pcls(*[np.concatenate(obj_pts_list), smoothed_x])
 # visualize_points3D(np.array(pcd.points), np.ones(len(pcd.points)))
 
-from vis.deprecated_vis import imshow
+
 plt.close()
 
 plt.plot(reconstructed_poses[:,0], reconstructed_poses[:,1], label='orig')
