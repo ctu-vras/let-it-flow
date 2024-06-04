@@ -1,4 +1,4 @@
-from vis.deprecated_vis import visualize_points3D
+from vis import *
 from av2.torch.data_loaders.scene_flow import SceneFlowDataloader
 
 from data.argoverse2 import unpack_one_frame
