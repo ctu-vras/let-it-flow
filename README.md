@@ -38,6 +38,8 @@
 </p>
 
 
+[<img src="https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=rJ7QBZW93wY)
+
 
 ### :sparkles: Performance
 - :rocket: **Scalability:** `Let It Flow` does not require training or supervision as an optimization-based method and works on out-of-distribution data. 
