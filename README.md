@@ -41,7 +41,7 @@
 | :movie_camera: 1-Minute Summary |
 | :-: |
 | <img width="80%" src="docs/intro_page.png"> |
-| [Link](https://www.youtube.com/watch?v=rJ7QBZW93wY)|
+| [>>>>>>> Click Here <<<<<<<](https://www.youtube.com/watch?v=rJ7QBZW93wY)|
 
 ### :sparkles: Performance
 - :rocket: **Scalability:** `Let It Flow` does not require training or supervision as an optimization-based method and works on out-of-distribution data. 
