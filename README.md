@@ -107,14 +107,16 @@ Result will print the End-Point-Error per class annotated in Argoverse2 and also
 If you find our work helpful, please consider citing our paper:
 
 ```bibtex
-@misc{vacek2024lif,
-      title={Let It Flow: Simultaneous Optimization of 3D Flow and Object Clustering}, 
-      author={Patrik Vacek and David Hurych and Tomáš Svoboda and Karel Zimmermann},
-      year={2024},
-      eprint={2404.08363},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-}
+@ARTICLE{Vacek-IEEE-TIV2024,
+  author={Vacek, Patrik and Hurych, David and Zimmermann, Karel and Svoboda, Tomáš},
+  journal={IEEE Transactions on Intelligent Vehicles}, 
+  title={Let-It-Flow: Simultaneous Optimization of 3D Flow and Object Clustering}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={1-10},
+  keywords={Springs;Rigidity;Point cloud compression;Estimation;Three-dimensional displays;Intelligent vehicles;Europe;Autonomous Driving;LiDAR;3D Scene Flow;Object Clustering},
+  doi={10.1109/TIV.2024.3443316}}
 ```
 ## License
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
