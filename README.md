@@ -119,9 +119,9 @@ If you find our work helpful, please consider citing our paper:
   doi={10.1109/TIV.2024.3443316}}
 ```
 ## License
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
 <br />
-This work is under the <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+This work is under the <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons 4.0 International License</a>.
 
 ## Acknowledgement
 This work is developed based on the open-source repositories and baselines:
